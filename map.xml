@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map proto="1.3.3">
+	<name>Thawing</name>
+	<version>1.0.0</version>
+	<objective>Leak lava from enemy's core.</objective>
+	<authors>
+		<author>rn01_24</author>
+	</authors>
+	<teams>
+		<team color="blue" max="24">Blue Team</team>
+		<team color="red" max="24">Red Team</team>
+	</teams>
+	<kits>
+		<kit name="spawn">
+			<item slot="0">iron sword</item>
+			<item slot="1">bow</item>
+			<item slot="2" enchantment="dig_speed:1">diamond pickaxe</item>
+			<item slot="3" enchantment="durability:1">iron axe</item>
+			<item slot="4" damage="2" amount="64">log</item>
+			<item slot="5" amount="64">glass</item>
+			<item slot="8" amount="64">cooked beef</item>
+			<item slot="28" amount="64" bind="true">arrow</item>
+			<item slot="29" amount="64" bind="true">arrow</item>
+			<potion duration="4" amplifier="5">increase damage</potion>
+			<potion duration="4" amplifier="100">regeneration</potion>
+		</kit>
+		<kit name="blue" parents="spawn">
+			<helmet bind="true" color="655FA5">leather helmet</helmet>
+			<chestplate bind="true" color="655FA5">leather chestplate</chestplate>
+			<leggings bind="true" color="655FA5">leather leggings</leggings>
+			<boots bind="true" color="655FA5">leather boots</boots>
+		</kit>
+		<kit name="red" parents="spawn">
+			<helmet bind="true" color="993333">leather helmet</helmet>
+			<chestplate bind="true" color="993333">leather chestplate</chestplate>
+			<leggings bind="true" color="993333">leather leggings</leggings>
+			<boots bind="true" color="993333">leather boots</boots>
+		</kit>
+	</kits>
+	<itemremove>
+		<item>iron sword</item>
+		<item>bow</item>
+		<item>diamond pickaxe</item>
+		<item>iron axe</item>
+		<item>log</item>
+		<item>wood</item>
+		<item>glass</item>
+		<item>cooked beef</item>
+		<item>arrow</item>
+		<item>iron ingot</item>
+		<item>iron helmet</item>
+		<item>iron chestplate</item>
+		<item>iron leggings</item>
+		<item>iron boots</item>
+		<item>exp bottle</item>
+	</itemremove>
+	<killreward>
+		<item amount="1">golden apple</item>
+		<item amount="5">exp bottle</item>
+	</killreward>
+	<spawns>
+		<spawn team="blue" yaw="-90" kit="blue">
+			<cuboid min="-86,55,0" max="-86,56,0"/>
+		</spawn>
+		<spawn team="red" yaw="90" kit="red">
+			<cuboid min="86,55,0" max="86,56,0"/>
+		</spawn>
+		<default yaw="0">
+			<cuboid min="2,65,-80" max="-2,65,-82"/>
+		</default>
+	</spawns>
+	<filters>
+		<filter name="no-void">
+			<not><void/></not>
+		</filter>
+	</filters>
+	<regions>
+		<rectangle min="80,-4" max="90,4" name="spawnA"/>
+		<rectangle min="-80,-4" max="-90,4" name="spawnB"/>
+		<complement name="spawnsA">
+			<region name="spawnA"/>
+			<block>89,3,0</block>
+		</complement>
+		<complement name="spawnsB">
+			<region name="spawnB"/>
+			<block>-89,3,0</block>
+		</complement>
+		<apply block="deny-blocks" message="You may not modify around the spawn.">
+			<region name="spawnsA"/>
+			<region name="spawnsB"/>
+		</apply>
+		<apply block-place="deny-blocks" message="You may not modify the iron storage.">
+			<cylinder base="72,1,-11" radius="5" height="11"/>
+			<cylinder base="72,1,11" radius="5" height="11"/>
+			<cylinder base="-72,1,-11" radius="5" height="11"/>
+			<cylinder base="-72,1,11" radius="5" height="11"/>
+		</apply>
+		<apply block="no-void" message="You may not modify void.">
+			<rectangle min="-oo,-oo" max="oo,oo"/>
+		</apply>
+	</regions>
+	<blockdrops>
+		<rule>
+			<region>
+				<block>89,3,0</block>
+				<block>-89,3,0</block>
+			</region>
+			<filter>
+				<block>diamond block</block>
+			</filter>
+			<drops>
+				<item>diamond pickaxe</item>
+			</drops>
+			<replacement>diamond block</replacement>
+			<direct>true</direct>
+			<wrongtool>true</wrongtool>
+		</rule>
+		<rule>
+			<region>
+				<cylinder base="72,1,-11" radius="5" height="100"/>
+				<cylinder base="72,1,11" radius="5" height="100"/>
+				<cylinder base="-72,1,-11" radius="5" height="100"/>
+				<cylinder base="-72,1,11" radius="5" height="100"/>
+			</region>
+			<filter>
+				<block>iron block</block>
+			</filter>
+			<drops>
+				<item amount="1">iron block</item>
+			</drops>
+			<wrongtool>true</wrongtool>
+			<direct>true</direct>
+			<restore-time>10s</restore-time>
+		</rule>
+		<rule>
+			<region>
+				<rectangle min="-oo,-oo" max="oo,oo"/>
+			</region>
+			<filter>
+				<block>obsidian</block>
+				<block>gold block</block>
+				<block>log</block>
+				<block>wood</block>
+			</filter>
+			<replacement>air</replacement>
+		</rule>
+	</blockdrops>
+	<cores material="obsidian" leak="5">
+		<core team="red">
+			<cuboid min="60,17,2" max="56,21,-2"/>
+		</core>
+		<core team="blue">
+			<cuboid min="-60,17,2" max="-56,21,-2"/>
+		</core>
+	</cores>
+	<maxbuildheight>40</maxbuildheight>
+	<locales>
+		<locale lang="ja_JP">
+			<string name="Leak lava from enemy's core." value="敵チームのコアから溶岩を流出"/>
+			<string name="You may not modify around the spawn." value="スポーン周辺は編集出来ません。"/>
+			<string name="You may not modify the iron storage." value="鉄採掘場は編集出来ません。"/>
+			<string name="You may not modify void." value="範囲外は編集出来ません。"/>
+		</locale>
+	</locales>
+	<include src="tutorial.xml"/>
+		<tutorial>
+			<stage title="Destroy the Core (DTC)">
+				<message>
+					<line>This map is a `a`lDestroy the Core `r(DTC) map.</line>
+					<line>The objective is to leak the lava from other team's core.</line>
+				</message>
+				<message lang="ja_JP">
+					<line>このマップは`a`lDestroy the Core `r(DTC)マップです。</line>
+					<line>敵チームのコアを破壊することが目標となります。</line>
+				</message>
+				<teleport>
+					<point yaw="65" pitch="10">54,28,-31</point>
+				</teleport>
+			</stage>
+			<stage title="Blue Core">
+				<title lang="ja_JP">Blueチームのコア</title>
+				<message>
+					<line>This is the `9Blue Core`r.</line>
+					<line>The obsidian blocks hold lava inside. `cRed team `rneeds to break the obsidian blocks to leak the lava out of the core to win`r.</line>
+				</message>
+				<message lang="ja_JP">
+					<line>Blueチームのコアです。</line>
+					<line>Redチームはこのコアを破壊し、溶岩を流出させなければなりません。</line>
+				</message>
+				<teleport>
+					<point yaw="90" pitch="0">-43,18,0</point>
+				</teleport>
+			</stage>
+		</tutorial>
+	</map>
